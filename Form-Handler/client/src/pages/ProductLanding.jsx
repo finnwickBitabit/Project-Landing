@@ -1,105 +1,108 @@
-import React from 'react';
-import ProductLanding from './ProductLanding';
+import React, { useRef, useEffect } from 'react';
+import './ProductLanding.css';
 
-function App() {
+export default function ProductLanding() {
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const productRef = useRef(null);
+
+  useEffect(() => {
+    if (nameRef.current) {
+      nameRef.current.focus();
+    }
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const name = nameRef.current?.value;
+    const email = emailRef.current?.value;
+    const product = productRef.current?.value;
+
+    alert(`Product Registration Details:\nName: ${name}\nEmail: ${email}\nModel: ${product}`);
+  };
+
   return (
-    <div style={styles.app}>
-      {/* Navigation Bar */}
-      <nav style={styles.nav}>
-        <div style={styles.navContainer}>
-          <h2 style={styles.logo}>TechGear</h2>
-          <ul style={styles.navLinks}>
-            <li style={styles.navItem}>Home</li>
-            <li style={styles.navItem}>Products</li>
-            <li style={styles.navItem}>About</li>
-            <li style={styles.navItem}>Contact</li>
-          </ul>
+    <div className="product-landing">
+      <div className="card">
+        <div className="header">
+          <div className="header-gradient"></div>
+          <div className="header-content">
+            <h1 className="header-title">Product Registration</h1>
+            <p className="header-subtitle">Sign up to activate your warranty and unlock exclusive perks.</p>
+          </div>
         </div>
-      </nav>
+        
+        <form onSubmit={handleSubmit} className="form">
+          <div className="form-group">
+            <label htmlFor="fullName" className="label">
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              ref={nameRef}
+              className="input"
+              placeholder="Jane Doe"
+              data-testid="input-name"
+            />
+          </div>
 
-      {/* Hero Section */}
-      <section style={styles.hero}>
-        <h1 style={styles.heroTitle}>Welcome to TechGear</h1>
-        <p style={styles.heroText}>
-          Discover our latest line of professional products
-        </p>
-      </section>
+          <div className="form-group">
+            <label htmlFor="email" className="label">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              ref={emailRef}
+              className="input"
+              placeholder="jane@example.com"
+              data-testid="input-email"
+            />
+          </div>
 
-      {/* Main Content */}
-      <main style={styles.mainContent}>
-        <ProductLanding />
-      </main>
+          <div className="form-group">
+            <label htmlFor="product" className="label">
+              Product Model
+            </label>
+            <div className="select-wrapper">
+              <select
+                id="product"
+                ref={productRef}
+                className="select"
+                data-testid="select-product"
+              >
+                <option value="Standard">Standard</option>
+                <option value="Pro">Pro</option>
+                <option value="Ultra">Ultra</option>
+              </select>
+              <div className="select-icon">
+                <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+          </div>
 
-      {/* Footer */}
-      <footer style={styles.footer}>
-        <p>© 2024 TechGear. All rights reserved.</p>
-      </footer>
+          <div className="button-container">
+            <button
+              type="submit"
+              className="button"
+              data-testid="button-submit"
+            >
+              Complete Registration
+            </button>
+          </div>
+        </form>
+        
+        <div className="footer">
+          <span className="footer-emoji">✨</span>
+          <p className="footer-text">
+            This design was brought to life by your AI model companion.
+          </p>
+          <span className="footer-emoji">✨</span>
+        </div>
+      </div>
     </div>
   );
 }
-
-const styles = {
-  app: {
-    fontFamily: 'Arial, sans-serif'
-  },
-  nav: {
-    backgroundColor: '#2980b9',
-    padding: '15px 0',
-    color: 'white'
-  },
-  navContainer: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '0 20px'
-  },
-  logo: {
-    margin: 0,
-    fontSize: '24px'
-  },
-  navLinks: {
-    display: 'flex',
-    listStyle: 'none',
-    gap: '30px',
-    margin: 0,
-    padding: 0
-  },
-  navItem: {
-    cursor: 'pointer',
-    fontSize: '16px',
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  hero: {
-    backgroundColor: '#3498db',
-    color: 'white',
-    textAlign: 'center',
-    padding: '60px 20px',
-    marginBottom: '40px'
-  },
-  heroTitle: {
-    fontSize: '36px',
-    marginBottom: '10px'
-  },
-  heroText: {
-    fontSize: '18px',
-    opacity: 0.9
-  },
-  mainContent: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '0 20px 40px'
-  },
-  footer: {
-    backgroundColor: '#2c3e50',
-    color: 'white',
-    textAlign: 'center',
-    padding: '20px',
-    marginTop: '40px'
-  }
-};
-
-export default App;
